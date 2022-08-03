@@ -1,12 +1,15 @@
 import { useState } from "react";
-import { signIn } from "../services/api";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { signIn } from "../services/api";
 
 // narutaocareca@hotmail.com
 // narutocareca
+// sadsamuraidog@gmail.com
+// 123456
 
 export default function LoginPage() {
+  const navigate = useNavigate();
   const [userInfo, setInfo] = useState({
     email: "",
     password: "",
@@ -22,8 +25,14 @@ export default function LoginPage() {
           try {
             signIn(userInfo).then((response) => {
               if (response.status === 200) {
+                console.log(response.data.image);
                 setInfo({ email: "", password: "" });
-                alert("Eventualmente HomePage...");
+                navigate("/habitos", {
+                  state: {
+                    image: response.data.image,
+                  },
+                  replace: true,
+                });
               }
             });
           } catch (error) {
