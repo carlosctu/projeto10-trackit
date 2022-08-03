@@ -47,6 +47,7 @@ const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  font-family: "Playball", cursive;
   p {
     padding-left: 18px;
   }
