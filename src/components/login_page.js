@@ -1,15 +1,19 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { signIn } from "../services/api";
+import { ThreeDots } from "react-loader-spinner";
+import { UserContext } from "../contexts/user_context";
 
 // narutaocareca@hotmail.com
 // narutocareca
 // sadsamuraidog@gmail.com
 // 123456
 
-export default function LoginPage() {
+export default function LoginPage({ setLoginInfo }) {
+  const loginInfo = useContext(UserContext);
   const navigate = useNavigate();
+  const [clicked, setClicked] = useState(false);
   const [userInfo, setInfo] = useState({
     email: "",
     password: "",
@@ -22,27 +26,31 @@ export default function LoginPage() {
       <Image src="../assets/img/logo.png" alt="trackIt" />
       <Form
         onSubmit={(event) => {
-          try {
-            signIn(userInfo).then((response) => {
+          setClicked(true);
+
+          signIn(userInfo)
+            .then((response) => {
               if (response.status === 200) {
-                console.log(response.data.image);
+                loginInfo.setData(response.data);
                 setInfo({ email: "", password: "" });
-                navigate("/habitos", {
+                setClicked(false);
+                navigate("/hoje", {
                   state: {
                     image: response.data.image,
+                    token: response.data.token,
                   },
                   replace: true,
                 });
               }
+            })
+            .catch((erro) => {
+              console.log(erro);
+              if (erro.response.status === 401) {
+                alert(erro.response.data.message);
+                setClicked(false);
+              }
             });
-          } catch (error) {
-            console.log(error);
-          }
-          signIn(userInfo).catch((erro) => {
-            if (erro.response.status === 401) {
-              alert(erro.response.data.message);
-            }
-          });
+
           event.preventDefault();
         }}
       >
@@ -52,6 +60,7 @@ export default function LoginPage() {
           type="email"
           placeholder="email"
           value={userInfo.email}
+          disabled={clicked}
           required
         />
         <Input
@@ -60,9 +69,18 @@ export default function LoginPage() {
           type="password"
           placeholder="senha"
           value={userInfo.password}
+          disabled={clicked}
           required
         />
-        <ButtonForm>Entrar</ButtonForm>
+        <FormButtonContainer>
+          <ButtonForm>
+            {clicked ? (
+              <ThreeDots color="#ffffff" height={65} width={80} />
+            ) : (
+              "Entrar"
+            )}
+          </ButtonForm>
+        </FormButtonContainer>
       </Form>
       <StyledLink to="/cadastro">Não tem uma conta? Cadastre-se!</StyledLink>
     </Wrapper>
@@ -95,12 +113,23 @@ const Input = styled.input`
   font-weight: 400;
   border: 2px solid #d4d4d4;
   border-radius: 4px;
+
   &::placeholder {
     color: #dbdbdb;
     font-family: "Lexend Deca", sans-serif;
   }
 `;
+const FormButtonContainer = styled.div`
+  display: flex;
+  div {
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;
 const ButtonForm = styled.button`
+  width: 301px;
   height: 45px;
   font-size: 18px;
   font-weight: 400;

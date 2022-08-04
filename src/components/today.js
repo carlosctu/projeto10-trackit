@@ -1,19 +1,27 @@
 import Header from "./header";
 import Navigationbar from "./navigationbar";
 import "react-circular-progressbar/dist/styles.css";
-import styled from "styled-components";
+import dayjs from "dayjs";
+import "dayjs/locale/pt-br";
 import { useContext } from "react";
+import styled from "styled-components";
 import { UserContext } from "../contexts/user_context";
 
-export default function HomePage() {
+export default function Today() {
+  // Chamando o useContext com os valores que serão alterados ao longo
+  // da execução do aplicativo
   const avatar = useContext(UserContext);
+  const date = dayjs().format("DD/MM ");
+  const weekday = dayjs().locale("pt-br").format("dddd");
   return (
     <Wrapper>
       <Header avatar={avatar.loginData.image} />
       <HabitsContainer>
         <HabitsTitle>
-          <p>Meus hábitos</p>
-          <ion-icon name="add-circle-outline"></ion-icon>
+          <h1>
+            {`${weekday.charAt(0).toUpperCase() + weekday.slice(1)}, ${date}`}
+          </h1>
+          <p>Nenhum hábito conluído ainda</p>
         </HabitsTitle>
         <Habits>
           "Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para
@@ -24,6 +32,7 @@ export default function HomePage() {
     </Wrapper>
   );
 }
+
 const Wrapper = styled.div`
   width: 100%;
   height: 100vh;
@@ -35,23 +44,25 @@ const HabitsContainer = styled.div`
 `;
 const HabitsTitle = styled.div`
   width: 100%;
-  height: 45px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: space-between;
   font-family: "Lexend Deca", sans-serif;
   font-size: 23px;
   line-height: 29px;
   color: #126ba5;
   margin-bottom: 12px;
-  ion-icon {
-    cursor: pointer;
-    width: 41px;
-    height: 35px;
+  p {
+    color: #bababa;
+    font-size: 18px;
+    line-height: 22px;
   }
 `;
 const Habits = styled.div`
+  margin-top: 28px;
   font-size: 18px;
   line-height: 23px;
+  letter-spacing: 0.65px;
   font-family: "Lexend Deca", sans-serif;
 `;
