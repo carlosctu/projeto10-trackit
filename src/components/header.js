@@ -1,8 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-
 export default function Header({ avatar }) {
+  const navigate = useNavigate();
   return (
-    <Wrapper>
+    <Wrapper onClick={() => navigate("/hoje")}>
       <p>TrackIt</p>
       <Avatar src={avatar} alt="" />
     </Wrapper>

@@ -1,16 +1,24 @@
-import { useState, useContext } from "react";
+import { useContext, useState } from "react";
+import { ThreeDots } from "react-loader-spinner";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { signIn } from "../services/api";
-import { ThreeDots } from "react-loader-spinner";
 import { UserContext } from "../contexts/user_context";
+import { signIn } from "../services/api";
 
 // narutaocareca@hotmail.com
 // narutocareca
 // sadsamuraidog@gmail.com
 // 123456
 
-export default function LoginPage({ setLoginInfo }) {
+// do navigate(caso precise depois)
+// , {
+//   state: {
+//     image: response.data.image,
+//     token: response.data.token,
+//   },
+//   replace: true,
+// }
+export default function LoginPage() {
   const loginInfo = useContext(UserContext);
   const navigate = useNavigate();
   const [clicked, setClicked] = useState(false);
@@ -34,13 +42,7 @@ export default function LoginPage({ setLoginInfo }) {
                 loginInfo.setData(response.data);
                 setInfo({ email: "", password: "" });
                 setClicked(false);
-                navigate("/hoje", {
-                  state: {
-                    image: response.data.image,
-                    token: response.data.token,
-                  },
-                  replace: true,
-                });
+                navigate("/hoje");
               }
             })
             .catch((erro) => {

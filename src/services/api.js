@@ -16,4 +16,31 @@ function signIn(userInfo) {
   return promise;
 }
 
-export { signIn, signUp };
+function createHabit(habitInfo, token) {
+  // Post(url, data, headers:'Authorization': token)
+  const promise = axios.post(
+    "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
+    habitInfo,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return promise;
+}
+
+function getHabits(token) {
+  const promise = axios.get(
+    "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return promise;
+}
+
+export { signIn, signUp, createHabit, getHabits };
+

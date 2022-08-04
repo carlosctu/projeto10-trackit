@@ -1,21 +1,22 @@
-import Header from "./header";
-import Navigationbar from "./navigationbar";
-import "react-circular-progressbar/dist/styles.css";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import { useContext } from "react";
+import "react-circular-progressbar/dist/styles.css";
 import styled from "styled-components";
 import { UserContext } from "../contexts/user_context";
+import Header from "./header";
+import Navigationbar from "./navigationbar";
 
 export default function Today() {
   // Chamando o useContext com os valores que serão alterados ao longo
   // da execução do aplicativo
-  const avatar = useContext(UserContext);
+  const userInfo = useContext(UserContext);
+  console.log(userInfo);
   const date = dayjs().format("DD/MM ");
   const weekday = dayjs().locale("pt-br").format("dddd");
   return (
     <Wrapper>
-      <Header avatar={avatar.loginData.image} />
+      <Header avatar={userInfo.loginData.image} />
       <HabitsContainer>
         <HabitsTitle>
           <h1>

@@ -1,11 +1,11 @@
+import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import HomePage from "./home_page";
+import { UserContext } from "../contexts/user_context";
+import "../styles/reset.css";
+import HabitsPage from "./habits";
 import LoginPage from "./login_page";
 import RegisterPage from "./register_page";
-import "../styles/reset.css";
 import Today from "./today";
-import { UserContext } from "../contexts/user_context";
-import { useState } from "react";
 
 export default function App() {
   // Definindo as informações que usarei no useContext
@@ -17,7 +17,7 @@ export default function App() {
           <Route path="/cadastro" element={<RegisterPage />} />
           <Route path="/" element={<LoginPage />} />
           <Route path="/hoje" element={<Today />} />
-          <Route path="/habitos" element={<HomePage />} />
+          <Route path="/habitos" element={<HabitsPage />} />
         </Routes>
       </UserContext.Provider>
     </BrowserRouter>
