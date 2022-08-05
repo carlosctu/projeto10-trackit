@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import "react-circular-progressbar/dist/styles.css";
+import { MutatingDots } from "react-loader-spinner";
 import styled from "styled-components";
 import { UserContext } from "../contexts/user_context";
 import { createHabit, getHabits } from "../services/api";
@@ -9,8 +10,14 @@ import Navigationbar from "./navigationbar";
 export default function HabitsPage() {
   const userInfo = useContext(UserContext);
   const token = userInfo.loginData.token;
+  const [refresh, setRefresh] = useState(false);
   const [addHabit, setAddHabit] = useState(false);
   const [userHabits, setUserHabits] = useState("");
+  const [progressIndicator, setProgressIndicator] = useState(
+    <Spinner>
+      <MutatingDots height={80} width={80} />
+    </Spinner>
+  );
   const days = [
     { id: 1, day: "D" },
     { id: 2, day: "S" },
@@ -21,13 +28,20 @@ export default function HabitsPage() {
     { id: 7, day: "S" },
   ];
   useEffect(() => {
+    setRefresh(false);
     getHabits(token)
       .then((response) => {
+        setProgressIndicator("");
         setUserHabits(response.data);
-        console.log(userHabits);
+        // console.log(userHabits);
       })
-      .catch((error) => console.log(error));
-  }, [token]);
+      .catch((error) => {
+        setProgressIndicator(
+          "Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!"
+        );
+        console.log(error);
+      });
+  }, [token, refresh]);
   return (
     <Wrapper>
       <Header avatar={userInfo.loginData.image} />
@@ -42,39 +56,46 @@ export default function HabitsPage() {
           ></ion-icon>
         </HabitsTitle>
         <Habits>
-          {addHabit ? <NewHabit token={token} /> : ""}
-          {userHabits ? (
-            userHabits.map((habit, index) => {
-              return (
-                <HabitContainer key={index}>
-                  <HabitName>{habit.name}</HabitName>
-                  <Days>
-                    {days.map((data, i) => {
-                      return (
-                        <HabitDaysContainer
-                          key={i}
-                          color={
-                            habit.days.includes(data.id) ? "#ffffff" : "#CFCFCF"
-                          }
-                          backgroundcolor={
-                            habit.days.includes(data.id) ? "#CFCFCF" : "#ffffff"
-                          }
-                        >
-                          {data.day}
-                        </HabitDaysContainer>
-                      );
-                    })}
-                  </Days>
-                  <Buttoncontainer></Buttoncontainer>
-                </HabitContainer>
-              );
-            })
+          {addHabit ? (
+            <NewHabit
+              token={token}
+              setAddHabit={setAddHabit}
+              setRefresh={setRefresh}
+            />
           ) : (
-            <p>
-              Você não tem nenhum hábito cadastrado ainda. Adicione um hábito
-              para começar a trackear!
-            </p>
+            ""
           )}
+          {userHabits
+            ? userHabits.map((habit, index) => {
+                return (
+                  <HabitContainer key={index}>
+                    <HabitName>{habit.name}</HabitName>
+                    <Days>
+                      {days.map((data, i) => {
+                        return (
+                          <HabitDaysContainer
+                            key={i}
+                            color={
+                              habit.days.includes(data.id)
+                                ? "#ffffff"
+                                : "#CFCFCF"
+                            }
+                            backgroundcolor={
+                              habit.days.includes(data.id)
+                                ? "#CFCFCF"
+                                : "#ffffff"
+                            }
+                          >
+                            {data.day}
+                          </HabitDaysContainer>
+                        );
+                      })}
+                    </Days>
+                    <Buttoncontainer></Buttoncontainer>
+                  </HabitContainer>
+                );
+              })
+            : progressIndicator}
         </Habits>
       </HabitsContainer>
       <Navigationbar />
@@ -82,7 +103,7 @@ export default function HabitsPage() {
   );
 }
 
-function NewHabit({ token }) {
+function NewHabit({ token, setAddHabit, setRefresh }) {
   const days = [
     { id: 1, day: "D" },
     { id: 2, day: "S" },
@@ -111,15 +132,18 @@ function NewHabit({ token }) {
     <Form
       onSubmit={(event) => {
         console.log(token);
+        console.log(event);
 
         createHabit(habit, token)
           .then((response) => {
             if (response.status === 201) {
               setHabit({ name: "", days: "" });
+              setAddHabit(false);
+              setRefresh(true);
               console.log(response);
             }
           })
-          .catch((error) => console.log(error));
+          .catch((error) => console.log(error.response.data.message));
 
         event.preventDefault();
       }}
@@ -147,7 +171,15 @@ function NewHabit({ token }) {
           })}
         </Days>
         <Buttoncontainer>
-          <CardButton color="#52B6FF" backgroundcolor="#ffffff">
+          <CardButton
+            onClick={(event) => {
+              console.log(event);
+              setAddHabit(false);
+              event.preventDefault();
+            }}
+            color="#52B6FF"
+            backgroundcolor="#ffffff"
+          >
             Cancelar
           </CardButton>
           <CardButton color="#ffffff" backgroundcolor="#52B6FF">
@@ -184,6 +216,35 @@ function Day({ id, day, setDays }) {
   );
 }
 
+const Wrapper = styled.div`
+  width: 100%;
+  /* height: 100%; */
+  min-height: 100vh;
+  height: 100%;
+  background-color: #e5e5e5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+const HabitsContainer = styled.div`
+  height: 100%;
+  max-width: 100vh;
+  background-color: #e5e5e5;
+  width: 340px;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  padding: 80px 17px 0 17px;
+`;
+const Spinner = styled.div`
+  width: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  circle {
+    fill: #126ba5;
+  }
+`;
 const HabitContainer = styled.div`
   box-sizing: border-box;
   width: 340px;
@@ -225,6 +286,7 @@ const NewCard = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border-radius: 10px;
 `;
 const CardInput = styled.input`
   box-sizing: border-box;
@@ -280,21 +342,7 @@ const CardButton = styled.button`
   background-color: ${(props) => props.backgroundcolor};
   color: ${(props) => props.color};
 `;
-const Wrapper = styled.div`
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #e5e5e5;
-`;
-const HabitsContainer = styled.div`
-  width: 340px;
-  align-items: center;
-  justify-content: center;
-  justify-self: center;
-  padding: 80px 17px 0 17px;
-`;
+
 const HabitsTitle = styled.div`
   width: 100%;
   height: 45px;
@@ -317,7 +365,7 @@ const Habits = styled.div`
   flex-direction: column;
   row-gap: 10px;
   width: 340px;
-  padding: 0 2px;
+  padding: 0 2px 100px 2px;
   font-size: 18px;
   line-height: 23px;
   font-family: "Lexend Deca", sans-serif;
