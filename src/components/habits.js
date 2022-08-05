@@ -3,7 +3,7 @@ import "react-circular-progressbar/dist/styles.css";
 import { MutatingDots } from "react-loader-spinner";
 import styled from "styled-components";
 import { UserContext } from "../contexts/user_context";
-import { createHabit, getHabits } from "../services/api";
+import { createHabit, deleteHabit, getHabits } from "../services/api";
 import Header from "./header";
 import Navigationbar from "./navigationbar";
 
@@ -14,6 +14,10 @@ export default function HabitsPage() {
   const [refresh, setRefresh] = useState(false);
   const [addHabit, setAddHabit] = useState(false);
   const [userHabits, setUserHabits] = useState("");
+  const [habit, setHabit] = useState({
+    name: "",
+    days: [],
+  });
   const [progressIndicator, setProgressIndicator] = useState(
     <Spinner>
       <MutatingDots height={80} width={80} />
@@ -34,7 +38,7 @@ export default function HabitsPage() {
       .then((response) => {
         if (response.data.length !== 0) {
           setProgressIndicator("");
-          setUserHabits(response.data);
+          setUserHabits(response.data.reverse());
           console.log("caiu no then");
           console.log(response.data);
           console.log(response.data.length === 0);
@@ -53,6 +57,7 @@ export default function HabitsPage() {
         console.log(error);
       });
   }, [token, refresh]);
+
   return (
     <Wrapper>
       <Header avatar={userInfo.loginData.image} />
@@ -69,6 +74,8 @@ export default function HabitsPage() {
         <Habits>
           {addHabit ? (
             <NewHabit
+              habit={habit}
+              setHabit={setHabit}
               token={token}
               setAddHabit={setAddHabit}
               setRefresh={setRefresh}
@@ -78,9 +85,26 @@ export default function HabitsPage() {
           )}
           {userHabits
             ? userHabits.map((habit, index) => {
+                console.log(habit);
                 return (
                   <HabitContainer key={index}>
-                    <HabitName>{habit.name}</HabitName>
+                    <HabiTitleContainer>
+                      <HabitName>{habit.name}</HabitName>
+                      <ion-icon
+                        name="trash-outline"
+                        onClick={() => {
+                          const confirm = window.confirm(
+                            `Deseja cancelar o habito ${habit.name}?`
+                          );
+                          if (confirm) {
+                            deleteHabit(token, habit.id).then((response) => {
+                              setRefresh(true);
+                              console.log(response);
+                            });
+                          }
+                        }}
+                      ></ion-icon>
+                    </HabiTitleContainer>
                     <Days>
                       {days.map((data, i) => {
                         return (
@@ -114,7 +138,7 @@ export default function HabitsPage() {
   );
 }
 
-function NewHabit({ token, setAddHabit, setRefresh }) {
+function NewHabit({ token, setAddHabit, setRefresh, habit, setHabit }) {
   const days = [
     { id: 1, day: "D" },
     { id: 2, day: "S" },
@@ -126,10 +150,7 @@ function NewHabit({ token, setAddHabit, setRefresh }) {
   ];
   const [selectedDays, setDays] = useState([]);
   const [disable, setDisable] = useState(false);
-  const [habit, setHabit] = useState({
-    name: "",
-    days: [],
-  });
+
   console.log(habit.name);
   console.log(habit);
   function handleForm(event) {
@@ -138,28 +159,34 @@ function NewHabit({ token, setAddHabit, setRefresh }) {
 
   useEffect(
     () => setHabit((info) => ({ ...info, days: selectedDays })),
-    [selectedDays]
+    [selectedDays, setHabit]
   );
 
   return (
     <Form
       onSubmit={(event) => {
-        console.log(token);
-        console.log(event);
-
+        if (habit.name === "") {
+          setDisable(false);
+          event.preventDefault();
+          return alert("Favor colocar um hábito!");
+        } else if (habit.days.length === 0) {
+          setDisable(false);
+          event.preventDefault();
+          return alert("Favor escolher as datas do hábito!");
+        }
         createHabit(habit, token)
           .then((response) => {
             if (response.status === 201) {
               setHabit({ name: "", days: "" });
               setAddHabit(false);
-              setRefresh(true);
               setDisable(false);
+              setRefresh(true);
 
               console.log(response);
             }
           })
           .catch((error) => {
-            console.log(error.response.data.message);
+            console.log("error:" + error.response.data.message);
             setDisable(false);
           });
 
@@ -183,6 +210,7 @@ function NewHabit({ token, setAddHabit, setRefresh }) {
                 key={data.id}
                 day={data.day}
                 id={data.id}
+                habit={habit}
                 setHabit={setHabit}
                 setDays={setDays}
               />
@@ -215,9 +243,8 @@ function NewHabit({ token, setAddHabit, setRefresh }) {
   );
 }
 
-function Day({ id, day, setDays }) {
+function Day({ id, day, setDays, habit }) {
   const [clicked, setClicked] = useState(false);
-
   return (
     <DayContainer
       color={clicked ? "#ffffff" : "#CFCFCF"}
@@ -259,6 +286,13 @@ const HabitsContainer = styled.div`
   justify-content: center;
   justify-self: center;
   padding: 80px 17px 0 17px;
+`;
+const HabiTitleContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  ion-icon {
+    padding-right: 18px;
+  }
 `;
 const Spinner = styled.div`
   width: 340px;

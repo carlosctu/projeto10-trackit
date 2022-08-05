@@ -42,5 +42,17 @@ function getHabits(token) {
   return promise;
 }
 
-export { signIn, signUp, createHabit, getHabits };
+function deleteHabit(token, id) {
+  const promise = axios.delete(
+    `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return promise;
+}
+
+export { signIn, signUp, createHabit, getHabits, deleteHabit };
 
