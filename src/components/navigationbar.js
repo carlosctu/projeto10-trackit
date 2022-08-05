@@ -12,7 +12,11 @@ export default function Navigationbar() {
       >
         Hábitos
       </p>
-      <ProgressbarContainer>
+      <ProgressbarContainer
+        onClick={() => {
+          navigate("/hoje");
+        }}
+      >
         <CircularProgressbar value="0" text="Hoje" />
       </ProgressbarContainer>
       <p>Histórico</p>

@@ -10,6 +10,7 @@ import Navigationbar from "./navigationbar";
 export default function HabitsPage() {
   const userInfo = useContext(UserContext);
   const token = userInfo.loginData.token;
+  // Atualiza os habitos quando um novo for inserido
   const [refresh, setRefresh] = useState(false);
   const [addHabit, setAddHabit] = useState(false);
   const [userHabits, setUserHabits] = useState("");
@@ -31,11 +32,21 @@ export default function HabitsPage() {
     setRefresh(false);
     getHabits(token)
       .then((response) => {
-        setProgressIndicator("");
-        setUserHabits(response.data);
-        // console.log(userHabits);
+        if (response.data.length !== 0) {
+          setProgressIndicator("");
+          setUserHabits(response.data);
+          console.log("caiu no then");
+          console.log(response.data);
+          console.log(response.data.length === 0);
+        } else {
+          console.log("caiuaqui");
+          setProgressIndicator(
+            "Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!"
+          );
+        }
       })
       .catch((error) => {
+        console.log("caiu no error");
         setProgressIndicator(
           "Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!"
         );
@@ -114,10 +125,12 @@ function NewHabit({ token, setAddHabit, setRefresh }) {
     { id: 7, day: "S" },
   ];
   const [selectedDays, setDays] = useState([]);
+  const [disable, setDisable] = useState(false);
   const [habit, setHabit] = useState({
     name: "",
     days: [],
   });
+  console.log(habit.name);
   console.log(habit);
   function handleForm(event) {
     setHabit((info) => ({ ...info, [event.target.name]: event.target.value }));
@@ -140,10 +153,15 @@ function NewHabit({ token, setAddHabit, setRefresh }) {
               setHabit({ name: "", days: "" });
               setAddHabit(false);
               setRefresh(true);
+              setDisable(false);
+
               console.log(response);
             }
           })
-          .catch((error) => console.log(error.response.data.message));
+          .catch((error) => {
+            console.log(error.response.data.message);
+            setDisable(false);
+          });
 
         event.preventDefault();
       }}
@@ -155,6 +173,7 @@ function NewHabit({ token, setAddHabit, setRefresh }) {
           name="name"
           value={habit.name}
           onChange={handleForm}
+          disabled={disable}
           required
         />
         <Days>
@@ -175,6 +194,7 @@ function NewHabit({ token, setAddHabit, setRefresh }) {
             onClick={(event) => {
               console.log(event);
               setAddHabit(false);
+              console.log(habit.name);
               event.preventDefault();
             }}
             color="#52B6FF"
@@ -182,7 +202,11 @@ function NewHabit({ token, setAddHabit, setRefresh }) {
           >
             Cancelar
           </CardButton>
-          <CardButton color="#ffffff" backgroundcolor="#52B6FF">
+          <CardButton
+            onClick={() => setDisable(true)}
+            color="#ffffff"
+            backgroundcolor="#52B6FF"
+          >
             Salvar
           </CardButton>
         </Buttoncontainer>
