@@ -43,7 +43,7 @@ export default function RegisterPage() {
           event.preventDefault();
         }}
       >
-        <Input
+        <input
           onChange={handleForm}
           name="email"
           type="email"
@@ -52,7 +52,7 @@ export default function RegisterPage() {
           disabled={clicked}
           required
         />
-        <Input
+        <input
           onChange={handleForm}
           name="password"
           type="password"
@@ -61,7 +61,7 @@ export default function RegisterPage() {
           disabled={clicked}
           required
         />
-        <Input
+        <input
           onChange={handleForm}
           name="name"
           type="text"
@@ -70,7 +70,7 @@ export default function RegisterPage() {
           disabled={clicked}
           required
         />
-        <Input
+        <input
           onChange={handleForm}
           name="image"
           type="photo"
@@ -101,7 +101,6 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-family: "Lexend Deca", sans-serif;
 `;
 const Image = styled.img`
   width: 180px;
@@ -113,18 +112,7 @@ const Form = styled.form`
   flex-direction: column;
   row-gap: 8px;
 `;
-const Input = styled.input`
-  height: 45px;
-  padding-left: 11px;
-  font-size: 18px;
-  font-weight: 400;
-  border: 2px solid #d4d4d4;
-  border-radius: 4px;
-  &::placeholder {
-    color: #dbdbdb;
-    font-family: "Lexend Deca", sans-serif;
-  }
-`;
+
 const FormButtonContainer = styled.div`
   display: flex;
   div {
@@ -144,7 +132,6 @@ const ButtonForm = styled.button`
   border: none;
   border-radius: 5px;
   margin-bottom: 25px;
-  font-family: "Lexend Deca", sans-serif;
 `;
 const StyledLink = styled(Link)`
   font-size: 16px;

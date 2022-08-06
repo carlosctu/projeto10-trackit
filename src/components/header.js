@@ -4,12 +4,12 @@ import styled from "styled-components";
 // TODO: Arrumar essa parte daqui depois
 function createHeaders() {
   const auth = JSON.parse(localStorage.getItem("auth"));
-  const image = auth.image
+  const image = auth.image;
   return image;
 }
 
 export default function Header({ avatar }) {
-  const userAvatar = createHeaders() 
+  const userAvatar = createHeaders();
   const navigate = useNavigate();
   return (
     <Wrapper onClick={() => navigate("/hoje")}>

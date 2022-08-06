@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { CircularProgressbar } from "react-circular-progressbar";
-export default function Navigationbar({habitsProgress}) {
+export default function Navigationbar({ habitsProgress }) {
   const navigate = useNavigate();
   return (
     <NavigationBar>
@@ -17,9 +17,15 @@ export default function Navigationbar({habitsProgress}) {
           navigate("/hoje");
         }}
       >
-        <CircularProgressbar value={habitsProgress}text="Hoje" />
+        <CircularProgressbar value={habitsProgress} text="Hoje" />
       </ProgressbarContainer>
-      <p>Histórico</p>
+      <p
+        onClick={() => {
+          navigate("/historico");
+        }}
+      >
+        Histórico
+      </p>
     </NavigationBar>
   );
 }

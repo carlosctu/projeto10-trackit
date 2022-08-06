@@ -1,17 +1,10 @@
 import styled from "styled-components";
 import { createHabit } from "../services/api";
 import { useState, useEffect } from "react";
+import { days } from "./common/common_values";
 
 export default function NewHabit({ setAddHabit, setRefresh, habit, setHabit }) {
-  const days = [
-    { id: 0, day: "D" },
-    { id: 1, day: "S" },
-    { id: 2, day: "T" },
-    { id: 3, day: "Q" },
-    { id: 4, day: "Q" },
-    { id: 5, day: "S" },
-    { id: 6, day: "S" },
-  ];
+
   const [selectedDays, setDays] = useState([]);
   const [disable, setDisable] = useState(false);
 
@@ -38,10 +31,10 @@ export default function NewHabit({ setAddHabit, setRefresh, habit, setHabit }) {
             setAddHabit(false);
             setDisable(false);
             setRefresh(true);
-            console.log("Habito criado: " + response);
+            console.log(response);
           })
           .catch((error) => {
-            console.log("error:" + error.response.data.message);
+            console.log(error);
             setDisable(false);
           });
 
@@ -150,7 +143,6 @@ const CardInput = styled.input`
   margin: 10px 19px;
   &::placeholder {
     color: #dbdbdb;
-    font-family: "Lexend Deca", sans-serif;
   }
 `;
 const Days = styled.div`
@@ -170,7 +162,7 @@ const DayContainer = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 5px;
-  font-family: "Lexend Deca", sans-serif;
+
   background-color: ${(props) => props.backgroundcolor};
   color: ${(props) => props.color};
 `;
@@ -188,7 +180,6 @@ const CardButton = styled.button`
   width: 84px;
   height: 35px;
   border-radius: 5px;
-  font-family: "Lexend Deca", sans-serif;
   background-color: ${(props) => props.backgroundcolor};
   color: ${(props) => props.color};
 `;

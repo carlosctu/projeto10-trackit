@@ -7,12 +7,11 @@ import { deleteHabit, getHabits } from "../services/api";
 import NewHabit from "./habit";
 import Header from "./header";
 import Navigationbar from "./navigationbar";
+import { defaultMessage, days } from "./common/common_values";
+import { Wrapper, Body, Spinner } from "./styles";
 
 export default function HabitsPage() {
-  const defaultMessage =
-    "Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!";
   const userInfo = useContext(UserContext);
-  console.log("userInfo" + userInfo.habitPercentage);
   // Atualiza os habitos quando um novo for inserido
   const [refresh, setRefresh] = useState(false);
   const [addHabit, setAddHabit] = useState(false);
@@ -26,15 +25,7 @@ export default function HabitsPage() {
       <MutatingDots height={80} width={80} />
     </Spinner>
   );
-  const days = [
-    { id: 0, day: "D" },
-    { id: 1, day: "S" },
-    { id: 2, day: "T" },
-    { id: 3, day: "Q" },
-    { id: 4, day: "Q" },
-    { id: 5, day: "S" },
-    { id: 6, day: "S" },
-  ];
+
   useEffect(() => {
     setRefresh(false);
     getHabits()
@@ -42,7 +33,6 @@ export default function HabitsPage() {
         if (response.data.length !== 0) {
           setProgressIndicator("");
           setUserHabits(response.data.reverse());
-          console.log("Lista Habitos: " + response.data);
         } else {
           setUserHabits("");
           setProgressIndicator(defaultMessage);
@@ -57,7 +47,7 @@ export default function HabitsPage() {
   return (
     <Wrapper>
       <Header avatar={userInfo.loginData.image} />
-      <HabitsContainer>
+      <Body>
         <HabitsTitle>
           <p>Meus hábitos</p>
           <ion-icon
@@ -80,11 +70,10 @@ export default function HabitsPage() {
           )}
           {userHabits
             ? userHabits.map((habit, index) => {
-                console.log(habit);
                 return (
                   <HabitContainer key={index}>
                     <HabiTitleContainer>
-                      <HabitName>{habit.name}</HabitName>
+                      <p>{habit.name}</p>
                       <ion-icon
                         name="trash-outline"
                         onClick={() => {
@@ -110,11 +99,6 @@ export default function HabitsPage() {
                                 ? "#ffffff"
                                 : "#CFCFCF"
                             }
-                            backgroundcolor={
-                              habit.days.includes(data.id)
-                                ? "#CFCFCF"
-                                : "#ffffff"
-                            }
                           >
                             {data.day}
                           </HabitDaysContainer>
@@ -127,47 +111,21 @@ export default function HabitsPage() {
               })
             : progressIndicator}
         </Habits>
-      </HabitsContainer>
+      </Body>
       <Navigationbar habitsProgress={userInfo.habitsProgress} />
     </Wrapper>
   );
 }
 
-const Wrapper = styled.div`
-  width: 100%;
-  min-height: 100vh;
-  height: 100%;
-  background-color: #e5e5e5;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-const HabitsContainer = styled.div`
-  height: 100%;
-  max-width: 100vh;
-  background-color: #e5e5e5;
-  width: 340px;
-  align-items: center;
-  justify-content: center;
-  justify-self: center;
-  padding: 80px 17px 0 17px;
-`;
 const HabiTitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-bottom: 8px;
   ion-icon {
     padding-right: 18px;
   }
 `;
-const Spinner = styled.div`
-  width: 340px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  circle {
-    fill: #126ba5;
-  }
-`;
+
 const HabitContainer = styled.div`
   box-sizing: border-box;
   width: 340px;
@@ -177,9 +135,7 @@ const HabitContainer = styled.div`
   background-color: white;
   border-radius: 10px;
 `;
-const HabitName = styled.p`
-  margin-bottom: 8px;
-`;
+
 const HabitDaysContainer = styled.div`
   width: 30px;
   height: 30px;
@@ -188,11 +144,10 @@ const HabitDaysContainer = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 5px;
-  font-family: "Lexend Deca", sans-serif;
-  background-color: ${(props) => props.backgroundcolor};
   color: ${(props) => props.color};
+  background-color: ${(props) =>
+    props.color === "#ffffff" ? "#CFCFCF" : "#ffffff"};
 `;
-
 const Days = styled.div`
   width: 301px;
   display: flex;
@@ -216,7 +171,6 @@ const HabitsTitle = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-family: "Lexend Deca", sans-serif;
   font-size: 23px;
   line-height: 29px;
   color: #126ba5;
@@ -232,9 +186,8 @@ const Habits = styled.div`
   flex-direction: column;
   row-gap: 10px;
   width: 340px;
-  padding: 0 2px 100px 2px;
+  padding: 0 2px;
   font-size: 18px;
   line-height: 23px;
-  font-family: "Lexend Deca", sans-serif;
   color: #666666;
 `;

@@ -35,7 +35,7 @@ function getHabits() {
 
 function deleteHabit(id) {
   const config = createHeaders();
-  console.log(id);
+
   const promise = axios.delete(`${baseURL}/habits/${id}`, config);
   return promise;
 }
@@ -49,14 +49,13 @@ function getTodayHabits() {
 
 function checkHabit(id) {
   const config = createHeaders();
-  console.log(config);
+
   const promise = axios.post(`${baseURL}/habits/${id}/check`, "", config);
   return promise;
 }
 function uncheckHabit(id) {
   const config = createHeaders();
-  
-  console.log(config);
+
   const promise = axios.post(`${baseURL}/habits/${id}/uncheck`, "", config);
   return promise;
 }
@@ -69,5 +68,5 @@ export {
   deleteHabit,
   getTodayHabits,
   checkHabit,
-  uncheckHabit
+  uncheckHabit,
 };
