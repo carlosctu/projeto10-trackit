@@ -10,12 +10,16 @@ import Today from "./today";
 export default function App() {
   // Definindo as informações que usarei no useContext
   const [loginData, setData] = useState("");
+  const [habitsProgress, setProgress] = useState(0);
+  console.log(habitsProgress);
   return (
     <BrowserRouter>
-      <UserContext.Provider value={{ loginData, setData }}>
+      <UserContext.Provider
+        value={{ loginData, setData, habitsProgress, setProgress }}
+      >
         <Routes>
-          <Route path="/cadastro" element={<RegisterPage />} />
           <Route path="/" element={<LoginPage />} />
+          <Route path="/cadastro" element={<RegisterPage />} />
           <Route path="/hoje" element={<Today />} />
           <Route path="/habitos" element={<HabitsPage />} />
         </Routes>

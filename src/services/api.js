@@ -2,53 +2,72 @@ import axios from "axios";
 
 const baseURL = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit";
 
-function signUp(userInfo) {
-  const promise = axios.post(`${baseURL}/auth/sign-up`, userInfo);
+function createHeaders() {
+  const auth = JSON.parse(localStorage.getItem("auth"));
+  const config = {
+    headers: { Authorization: `Bearer ${auth.token}` },
+  };
+  return config;
+}
+
+function signUp(body) {
+  const promise = axios.post(`${baseURL}/auth/sign-up`, body);
   return promise;
 }
 
-function signIn(userInfo) {
-  const promise = axios.post(`${baseURL}/auth/login`, userInfo);
+function signIn(body) {
+  const promise = axios.post(`${baseURL}/auth/login`, body);
   return promise;
 }
 
-function createHabit(habitInfo, token) {
+function createHabit(body) {
+  const config = createHeaders();
   // Post(url, data, headers:'Authorization': token)
-  const promise = axios.post(`${baseURL}/habits`, habitInfo, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const promise = axios.post(`${baseURL}/habits`, body, config);
   return promise;
 }
 
-function getHabits(token) {
-  const promise = axios.get(`${baseURL}/habits`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+function getHabits() {
+  const config = createHeaders();
+  const promise = axios.get(`${baseURL}/habits`, config);
   return promise;
 }
 
-function deleteHabit(token, id) {
-  const promise = axios.delete(`${baseURL}/habits/${id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+function deleteHabit(id) {
+  const config = createHeaders();
+  console.log(id);
+  const promise = axios.delete(`${baseURL}/habits/${id}`, config);
   return promise;
 }
 
-function getTodayHabits(token) {
-  const promise = axios.get(`${baseURL}/habits/today`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+function getTodayHabits() {
+  const config = createHeaders();
+  const promise = axios.get(`${baseURL}/habits/today`, config);
 
   return promise;
 }
 
-export { signIn, signUp, createHabit, getHabits, deleteHabit, getTodayHabits };
+function checkHabit(id) {
+  const config = createHeaders();
+  console.log(config);
+  const promise = axios.post(`${baseURL}/habits/${id}/check`, "", config);
+  return promise;
+}
+function uncheckHabit(id) {
+  const config = createHeaders();
+  
+  console.log(config);
+  const promise = axios.post(`${baseURL}/habits/${id}/uncheck`, "", config);
+  return promise;
+}
 
+export {
+  signIn,
+  signUp,
+  createHabit,
+  getHabits,
+  deleteHabit,
+  getTodayHabits,
+  checkHabit,
+  uncheckHabit
+};
