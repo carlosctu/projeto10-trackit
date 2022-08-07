@@ -10,6 +10,7 @@ import Today from "../components/today/today";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 import ProtectedRoute from "../utils/routes/protected_route";
 import PrivateRoute from "../utils/routes/private_route";
+
 const theme = {
   primary: "#e5e5e5",
   secondary: "#126BA5",

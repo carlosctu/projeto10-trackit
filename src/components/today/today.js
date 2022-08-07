@@ -3,7 +3,7 @@ import { MutatingDotsSpinner } from "../../utils/spinners/spinners";
 import { UserContext } from "../../utils/providers/user_context";
 import { Wrapper, Title, Body, Spinner } from "../styles/styles";
 import { useContext, useEffect, useState } from "react";
-import { defaultMessage, date, weekday } from "../../utils/constants";
+import { defaultMessage2, date, weekday } from "../../utils/constants";
 import "react-circular-progressbar/dist/styles.css";
 import Navigationbar from "../navbar/navigationbar";
 import styled from "styled-components";
@@ -18,14 +18,13 @@ export default function Today() {
       <MutatingDotsSpinner />
     </Spinner>
   );
-  console.log(userInfo.progressBar);
   useEffect(() => {
     setRefresh(false);
 
     getTodayHabits()
       .then((response) => {
         if (response.data.length === 0) {
-          return setLoading(defaultMessage);
+          return setLoading(defaultMessage2);
         }
         setHabits(response.data.reverse());
         const done = response.data.filter((e) => e.done);
@@ -39,9 +38,8 @@ export default function Today() {
           userInfo.setProgress(0);
         }
       })
-      .catch((error) => {
-        console.log(error);
-        setLoading(defaultMessage);
+      .catch(() => {
+        setLoading(defaultMessage2);
       });
   }, [refresh, userInfo]);
   return (
@@ -59,7 +57,6 @@ export default function Today() {
           </HabitSequence>
           {dayHabits
             ? dayHabits.map((habit) => {
-                console.log(habit);
                 return (
                   <TodayHabits
                     key={habit.id}
@@ -102,26 +99,24 @@ function TodayHabits({ habit, setRefresh }) {
   }
 
   return (
-    <>
-      <HabitContainer>
-        <HabitDescription>
-          <h1>{habit.name}</h1>
-          {habitDescription.map((e, index) => {
-            return (
-              <p key={index}>
-                {e.name}
-                <Sequence color={isEqual ? "#8FC549" : "#666666"}>
-                  {e.value} dias
-                </Sequence>
-              </p>
-            );
-          })}
-        </HabitDescription>
-        <CheckHabitIcon color={habit.done ? "#8FC549" : "#E7E7E7"}>
-          <ion-icon name="checkbox" onClick={() => CheckUncheck()}></ion-icon>
-        </CheckHabitIcon>
-      </HabitContainer>
-    </>
+    <HabitContainer>
+      <HabitDescription>
+        <h1>{habit.name}</h1>
+        {habitDescription.map((e, index) => {
+          return (
+            <p key={index}>
+              {e.name}
+              <Sequence color={isEqual ? "#8FC549" : "#666666"}>
+                {e.value} dias
+              </Sequence>
+            </p>
+          );
+        })}
+      </HabitDescription>
+      <CheckHabitIcon color={habit.done ? "#8FC549" : "#E7E7E7"}>
+        <ion-icon name="checkbox" onClick={() => CheckUncheck()}></ion-icon>
+      </CheckHabitIcon>
+    </HabitContainer>
   );
 }
 
@@ -178,7 +173,7 @@ const HabitContainer = styled.div`
   height: 91px;
   padding: 13px 0 13px 15px;
   padding-left: 15px;
-  background-color: white;
+  background-color: #ffffff;
   border-radius: 10px;
 `;
 

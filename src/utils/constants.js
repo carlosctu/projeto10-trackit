@@ -3,8 +3,8 @@ import dayjs from "dayjs";
 
 export const defaultMessage =
   "Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!";
-
-export const defaultMessage2 =
+export const defaultMessage2 = "Você não tem nenhum habito por fazer hoje!";
+export const defaultMessage3 =
   "Em breve você poderá ver o histórico dos seus hábitos aqui!";
 
 export const days = [
