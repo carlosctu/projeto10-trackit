@@ -49,32 +49,30 @@ export default function CalendarHistory() {
     }
   }
   return (
-    <>
-      <Wrapper>
-        <Calendar
-          calendarType="US"
-          onChange={onChange}
-          locale="pt-br"
-          tileClassName={Tile}
-          value={value}
-          onClickDay={handleDay}
-        />
-        <CalendarInfo>
-          <p>Legenda:</p>
-          <Description>
-            Habitos do dia completos:
-            <DescColor color="#bdcfb5"></DescColor>
-          </Description>
-          <Description>
-            Habitos do dia incompletos:
-            <DescColor color="#ba3b46"></DescColor>
-          </Description>
-          <div>
-            {showHabits ? <HistoryContainer showHabits={showHabits} /> : ""}
-          </div>
-        </CalendarInfo>
-      </Wrapper>
-    </>
+    <Wrapper>
+      <Calendar
+        calendarType="US"
+        onChange={onChange}
+        locale="pt-br"
+        tileClassName={Tile}
+        value={value}
+        onClickDay={handleDay}
+      />
+      <CalendarInfo>
+        <p>Legenda:</p>
+        <Description>
+          Habitos do dia completos:
+          <DescColor color="#bdcfb5"></DescColor>
+        </Description>
+        <Description>
+          Habitos do dia incompletos:
+          <DescColor color="#ba3b46"></DescColor>
+        </Description>
+        <div>
+          {showHabits ? <HistoryContainer showHabits={showHabits} /> : ""}
+        </div>
+      </CalendarInfo>
+    </Wrapper>
   );
 }
 
@@ -102,7 +100,6 @@ function HistoryHabits({ info }) {
 }
 
 const HistoryBody = styled.div`
-  box-sizing: border-box;
   p {
     padding-bottom: 15px;
   }
@@ -111,7 +108,6 @@ const CheckCircle = styled(CheckmarkCircle)`
   padding-right: 20px;
   height: 12px;
   width: 12px;
-  align-items: unset;
   svg {
     fill: #bdcfb5;
   }
@@ -129,7 +125,6 @@ const HabitsBody = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 10px;
-  column-gap: 10px;
 `;
 const HabitsContainer = styled.div`
   display: flex;
@@ -139,7 +134,6 @@ const HabitsContainer = styled.div`
   width: 340px;
   height: 51px;
   padding: 13px 0 13px 15px;
-  padding-left: 15px;
   background-color: #ffffff;
   border-radius: 10px;
 `;
@@ -147,6 +141,7 @@ const HabitsContainer = styled.div`
 const Wrapper = styled.div`
   .react-calendar {
     border-radius: 10px;
+    font-family: "Lexend Deca", sans-serif;
   }
   .react-calendar__navigation__label {
     font-family: "Lexend Deca", sans-serif;
@@ -158,7 +153,6 @@ const Wrapper = styled.div`
   }
   .react-calendar__month-view__weekdays__weekday {
     font-size: 13px;
-    font-family: "Lexend Deca", sans-serif;
   }
   .done {
     background-color: #bdcfb5;
@@ -182,7 +176,6 @@ const Description = styled.div`
   justify-content: space-between;
 `;
 const DescColor = styled.div`
-  margin-left: 10px;
   width: 20px;
   height: 20px;
   border-radius: 50%;

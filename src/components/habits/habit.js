@@ -13,7 +13,7 @@ export default function NewHabit({
 }) {
   const [selectedDays, setDays] = useState([]);
   const [disable, setDisable] = useState(false);
-  console.log(selectedDays);
+
 
   function handleForm(event) {
     setHabit((info) => ({ ...info, [event.target.name]: event.target.value }));
@@ -119,14 +119,9 @@ function Day({ id, day, setDays }) {
 // Styles
 const Form = styled.form`
   margin-bottom: 29px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   display: ${(props) => props.display};
 `;
 const NewCard = styled.div`
-  width: 340px;
   height: 180px;
   background-color: #ffffff;
   display: flex;
@@ -139,11 +134,7 @@ const CardInput = styled.input`
   box-sizing: border-box;
   width: 301px;
   height: 45px;
-  padding-left: 11px;
   font-size: 18px;
-  font-weight: 400;
-  border: 2px solid #d4d4d4;
-  border-radius: 4px;
   margin: 10px 19px;
   &::placeholder {
     color: #dbdbdb;
@@ -173,22 +164,12 @@ const DayContainer = styled.div`
 const Buttoncontainer = styled.div`
   width: 303px;
   display: flex;
-  align-items: center;
   justify-content: flex-end;
   column-gap: 12px;
-  div {
-    align-items: center;
-    padding-left: 15px;
-    width: 40px;
-    height: 35px;
-  }
-  svg {
-  }
 `;
 const CardButton = styled.button`
   border: none;
   font-size: 16px;
-  line-height: 20px;
   width: 84px;
   height: 35px;
   border-radius: 5px;

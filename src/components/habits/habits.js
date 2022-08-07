@@ -2,7 +2,7 @@ import { MutatingDotsSpinner } from "../../utils/spinners/spinners";
 import { UserContext } from "../../utils/providers/user_context";
 import { defaultMessage, days } from "../../utils/constants";
 import { deleteHabit, getHabits } from "../../services/api";
-import { Wrapper, Body, Spinner } from "../styles/styles";
+import { Wrapper, Body, Spinner, HabitsBody } from "../styles/styles";
 import { useContext, useEffect, useState } from "react";
 import Navigationbar from "../navbar/navigationbar";
 import "react-circular-progressbar/dist/styles.css";
@@ -63,7 +63,7 @@ export default function HabitsPage() {
             }}
           ></ion-icon>
         </HabitsTitle>
-        <Habits>
+        <HabitsBody>
           {addHabit ? (
             <NewHabit
               habit={habit}
@@ -93,7 +93,7 @@ export default function HabitsPage() {
                 );
               })
             : progressIndicator}
-        </Habits>
+        </HabitsBody>
       </Body>
       <Navigationbar progressBar={userInfo.progressBar} />
     </Wrapper>
@@ -128,11 +128,9 @@ const HabiTitleContainer = styled.div`
 
 const HabitContainer = styled.div`
   box-sizing: border-box;
-  width: 340px;
   height: 91px;
   padding: 13px 0 13px 15px;
-  padding-left: 15px;
-  background-color: white;
+  background-color: #ffffff;
   border-radius: 10px;
 `;
 
@@ -149,22 +147,15 @@ const HabitDaysContainer = styled.div`
     props.color === "#ffffff" ? "#CFCFCF" : "#ffffff"};
 `;
 const Days = styled.div`
-  width: 301px;
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
   column-gap: 4px;
-  margin-bottom: 26px;
 `;
 
 const HabitsTitle = styled.div`
-  width: 100%;
-  height: 45px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   font-size: 23px;
-  line-height: 29px;
   color: #126ba5;
   margin-bottom: 12px;
   ion-icon {
@@ -172,14 +163,4 @@ const HabitsTitle = styled.div`
     width: 41px;
     height: 35px;
   }
-`;
-const Habits = styled.div`
-  display: flex;
-  flex-direction: column;
-  row-gap: 10px;
-  width: 340px;
-  padding: 0 2px;
-  font-size: 18px;
-  line-height: 23px;
-  color: #666666;
 `;

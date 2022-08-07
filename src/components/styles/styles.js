@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-
 // Today, Habits & History Page
 export const Wrapper = styled.div`
   display: flex;
@@ -35,6 +34,20 @@ export const Title = styled.div`
     letter-spacing: 0.5;
   }
 `;
+export const Habits = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  font-size: 18px;
+  line-height: 23px;
+  letter-spacing: 0.65px;
+`;
+export const HabitsBody = styled(Habits)`
+  width: 340px;
+  padding: 0 2px;
+  color: #666666;
+`;
+
 // Spinner
 export const Spinner = styled.div`
   width: 340px;
@@ -90,5 +103,67 @@ export const FormButtonContainer = styled.div`
     border: none;
     border-radius: 5px;
     margin-bottom: 25px;
+  }
+`;
+// Header
+export const HeaderContainer = styled.div`
+  width: 100%;
+  height: 70px;
+  z-index: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #126ba5;
+  color: #ffffff;
+  font-size: 39px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: "Playball", cursive;
+  p {
+    padding-left: 18px;
+  }
+`;
+export const Avatar = styled.img`
+  width: 51px;
+  height: 51px;
+  border-radius: 95%;
+  margin-right: 18px;
+`;
+
+
+// Navbar
+export const NavigationContainer = styled.div`
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 70px;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 18px;
+  color: #52b6ff;
+`;
+export const ProgressbarContainer = styled.div`
+  box-sizing: border-box;
+  width: 100px;
+  height: 100px;
+  padding: 10px;
+  border-radius: 95%;
+  margin-bottom: 40px;
+  background-color: #52b6ff;
+  .CircularProgressbar-path {
+    stroke: #ffffff;
+  }
+  .CircularProgressbar-trail {
+    stroke: #52b6ff;
+  }
+  .CircularProgressbar-text {
+    fill: #ffffff;
+  }
+  .CircularProgressbar-background {
+    fill: green;
   }
 `;

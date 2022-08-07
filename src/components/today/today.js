@@ -1,7 +1,7 @@
 import { getTodayHabits, checkHabit, uncheckHabit } from "../../services/api";
 import { MutatingDotsSpinner } from "../../utils/spinners/spinners";
 import { UserContext } from "../../utils/providers/user_context";
-import { Wrapper, Title, Body, Spinner } from "../styles/styles";
+import { Wrapper, Title, Body, Spinner, Habits } from "../styles/styles";
 import { useContext, useEffect, useState } from "react";
 import { defaultMessage2, date, weekday } from "../../utils/constants";
 import "react-circular-progressbar/dist/styles.css";
@@ -169,19 +169,9 @@ const HabitContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
-  width: 340px;
   height: 91px;
   padding: 13px 0 13px 15px;
-  padding-left: 15px;
   background-color: #ffffff;
   border-radius: 10px;
 `;
 
-const Habits = styled.div`
-  display: flex;
-  flex-direction: column;
-  row-gap: 10px;
-  font-size: 18px;
-  line-height: 23px;
-  letter-spacing: 0.65px;
-`;
