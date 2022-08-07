@@ -22,7 +22,6 @@ function signIn(body) {
 
 function createHabit(body) {
   const config = createHeaders();
-  // Post(url, data, headers:'Authorization': token)
   const promise = axios.post(`${baseURL}/habits`, body, config);
   return promise;
 }
@@ -60,6 +59,12 @@ function uncheckHabit(id) {
   return promise;
 }
 
+function getHistory() {
+  const config = createHeaders();
+  const promise = axios.get(`${baseURL}/habits/history/daily`, config);
+  return promise;
+}
+
 export {
   signIn,
   signUp,
@@ -69,4 +74,5 @@ export {
   getTodayHabits,
   checkHabit,
   uncheckHabit,
+  getHistory,
 };

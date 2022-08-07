@@ -1,20 +1,19 @@
+import { MutatingDotsSpinner } from "../../utils/spinners/spinners";
+import { UserContext } from "../../utils/providers/user_context";
+import { defaultMessage, days } from "../../utils/constants";
+import { deleteHabit, getHabits } from "../../services/api";
+import { Wrapper, Body, Spinner } from "../styles/styles";
 import { useContext, useEffect, useState } from "react";
+import Navigationbar from "../navbar/navigationbar";
 import "react-circular-progressbar/dist/styles.css";
-import { MutatingDots } from "react-loader-spinner";
 import styled from "styled-components";
-import { UserContext } from "../contexts/user_context";
-import { deleteHabit, getHabits } from "../services/api";
 import NewHabit from "./habit";
-import Header from "./header";
-import Navigationbar from "./navigationbar";
-import { defaultMessage, days } from "./common/common_values";
-import { Wrapper, Body, Spinner } from "./styles";
 
 export default function HabitsPage() {
   const userInfo = useContext(UserContext);
-  // Atualiza os habitos quando um novo for inserido
   const [refresh, setRefresh] = useState(false);
   const [addHabit, setAddHabit] = useState(false);
+  const [wasClicked, setClicked] = useState(false);
   const [userHabits, setUserHabits] = useState("");
   const [habit, setHabit] = useState({
     name: "",
@@ -22,7 +21,7 @@ export default function HabitsPage() {
   });
   const [progressIndicator, setProgressIndicator] = useState(
     <Spinner>
-      <MutatingDots height={80} width={80} />
+      <MutatingDotsSpinner />
     </Spinner>
   );
 
@@ -31,25 +30,32 @@ export default function HabitsPage() {
     getHabits()
       .then((response) => {
         if (response.data.length !== 0) {
-          setProgressIndicator("");
+          setProgressIndicator(null);
           setUserHabits(response.data.reverse());
         } else {
           setUserHabits("");
           setProgressIndicator(defaultMessage);
         }
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
         setProgressIndicator(defaultMessage);
       });
   }, [refresh]);
 
+  function handleConfirm(habitId) {
+    const confirm = window.confirm(`Deseja cancelar o habito ${habitId.name}?`);
+    if (confirm) {
+      deleteHabit(habitId.id).then(() => {
+        setRefresh(true);
+      });
+    }
+  }
+
   return (
     <Wrapper>
-      <Header avatar={userInfo.loginData.image} />
       <Body>
         <HabitsTitle>
-          <p>Meus hábitos</p>
+          Meus hábitos
           <ion-icon
             name="add-circle-outline"
             onClick={() => {
@@ -61,59 +67,53 @@ export default function HabitsPage() {
           {addHabit ? (
             <NewHabit
               habit={habit}
+              wasClicked={wasClicked}
+              setClicked={setClicked}
               setHabit={setHabit}
+              addHabit={addHabit}
               setAddHabit={setAddHabit}
               setRefresh={setRefresh}
             />
-          ) : (
-            ""
-          )}
+          ) : null}
           {userHabits
-            ? userHabits.map((habit, index) => {
+            ? userHabits.map((habitId, index) => {
                 return (
                   <HabitContainer key={index}>
                     <HabiTitleContainer>
-                      <p>{habit.name}</p>
+                      {habitId.name}
                       <ion-icon
                         name="trash-outline"
-                        onClick={() => {
-                          const confirm = window.confirm(
-                            `Deseja cancelar o habito ${habit.name}?`
-                          );
-                          if (confirm) {
-                            deleteHabit(habit.id).then((response) => {
-                              setRefresh(true);
-                              console.log(response);
-                            });
-                          }
-                        }}
+                        onClick={() => handleConfirm(habitId)}
                       ></ion-icon>
                     </HabiTitleContainer>
                     <Days>
-                      {days.map((data, i) => {
-                        return (
-                          <HabitDaysContainer
-                            key={i}
-                            color={
-                              habit.days.includes(data.id)
-                                ? "#ffffff"
-                                : "#CFCFCF"
-                            }
-                          >
-                            {data.day}
-                          </HabitDaysContainer>
-                        );
-                      })}
+                      <UserHabitDays habitId={habitId} habitDays={days} />
                     </Days>
-                    <Buttoncontainer></Buttoncontainer>
                   </HabitContainer>
                 );
               })
             : progressIndicator}
         </Habits>
       </Body>
-      <Navigationbar habitsProgress={userInfo.habitsProgress} />
+      <Navigationbar progressBar={userInfo.progressBar} />
     </Wrapper>
+  );
+}
+
+function UserHabitDays({ habitId, habitDays }) {
+  return (
+    <Days>
+      {habitDays.map((data, index) => {
+        return (
+          <HabitDaysContainer
+            key={index}
+            color={habitId.days.includes(data.id) ? "#ffffff" : "#CFCFCF"}
+          >
+            {data.day}
+          </HabitDaysContainer>
+        );
+      })}
+    </Days>
   );
 }
 
@@ -155,14 +155,6 @@ const Days = styled.div`
   justify-content: flex-start;
   column-gap: 4px;
   margin-bottom: 26px;
-`;
-
-const Buttoncontainer = styled.div`
-  width: 303px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  column-gap: 12px;
 `;
 
 const HabitsTitle = styled.div`

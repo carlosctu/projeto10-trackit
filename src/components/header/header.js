@@ -1,15 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-// TODO: Arrumar essa parte daqui depois
-function createHeaders() {
-  const auth = JSON.parse(localStorage.getItem("auth"));
-  const image = auth.image;
-  return image;
-}
-
-export default function Header({ avatar }) {
-  const userAvatar = createHeaders();
+export default function Header({ userAvatar }) {
   const navigate = useNavigate();
   return (
     <Wrapper onClick={() => navigate("/hoje")}>

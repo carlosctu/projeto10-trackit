@@ -1,12 +1,19 @@
 import styled from "styled-components";
-import { createHabit } from "../services/api";
+import { createHabit } from "../../services/api";
 import { useState, useEffect } from "react";
-import { days } from "./common/common_values";
+import { days } from "../../utils/constants";
+import { ThreeDotsSpinner } from "../../utils/spinners/spinners";
 
-export default function NewHabit({ setAddHabit, setRefresh, habit, setHabit }) {
-
+export default function NewHabit({
+  setAddHabit,
+  addHabit,
+  setRefresh,
+  habit,
+  setHabit,
+}) {
   const [selectedDays, setDays] = useState([]);
   const [disable, setDisable] = useState(false);
+  console.log(selectedDays);
 
   function handleForm(event) {
     setHabit((info) => ({ ...info, [event.target.name]: event.target.value }));
@@ -19,6 +26,7 @@ export default function NewHabit({ setAddHabit, setRefresh, habit, setHabit }) {
 
   return (
     <Form
+      display={addHabit ? null : "none"}
       onSubmit={(event) => {
         if (habit.name === "" || habit.days.length === 0) {
           setDisable(false);
@@ -26,15 +34,13 @@ export default function NewHabit({ setAddHabit, setRefresh, habit, setHabit }) {
           return alert("Favor preencher todos os campos!");
         }
         createHabit(habit)
-          .then((response) => {
+          .then(() => {
             setHabit({ name: "", days: "" });
             setAddHabit(false);
             setDisable(false);
             setRefresh(true);
-            console.log(response);
           })
-          .catch((error) => {
-            console.log(error);
+          .catch(() => {
             setDisable(false);
           });
 
@@ -58,8 +64,6 @@ export default function NewHabit({ setAddHabit, setRefresh, habit, setHabit }) {
                 key={data.id}
                 day={data.day}
                 id={data.id}
-                habit={habit}
-                setHabit={setHabit}
                 setDays={setDays}
               />
             );
@@ -72,16 +76,11 @@ export default function NewHabit({ setAddHabit, setRefresh, habit, setHabit }) {
               event.preventDefault();
             }}
             color="#52B6FF"
-            backgroundcolor="#ffffff"
           >
             Cancelar
           </CardButton>
-          <CardButton
-            onClick={() => setDisable(true)}
-            color="#ffffff"
-            backgroundcolor="#52B6FF"
-          >
-            Salvar
+          <CardButton onClick={() => setDisable(true)} color="#ffffff">
+            {!disable ? "Salvar" : <ThreeDotsSpinner />}
           </CardButton>
         </Buttoncontainer>
       </NewCard>
@@ -91,21 +90,25 @@ export default function NewHabit({ setAddHabit, setRefresh, habit, setHabit }) {
 
 function Day({ id, day, setDays }) {
   const [clicked, setClicked] = useState(false);
+
+  function checkDay() {
+    if (clicked) {
+      setDays((weekday) =>
+        weekday.filter((element) => {
+          return element !== id;
+        })
+      );
+    } else {
+      setDays((weekday) => [...weekday, id]);
+    }
+    setClicked((prevState) => !prevState);
+  }
+
   return (
     <DayContainer
       color={clicked ? "#ffffff" : "#CFCFCF"}
-      backgroundcolor={clicked ? "#CFCFCF" : "#ffffff"}
       onClick={() => {
-        if (clicked) {
-          setDays((days) =>
-            days.filter((element) => {
-              return element !== id;
-            })
-          );
-        } else {
-          setDays((days) => [...days, id]);
-        }
-        setClicked((prevState) => !prevState);
+        checkDay();
       }}
     >
       {day}
@@ -120,6 +123,7 @@ const Form = styled.form`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  display: ${(props) => props.display};
 `;
 const NewCard = styled.div`
   width: 340px;
@@ -162,9 +166,9 @@ const DayContainer = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 5px;
-
-  background-color: ${(props) => props.backgroundcolor};
   color: ${(props) => props.color};
+  background-color: ${(props) =>
+    props.color === "#ffffff" ? "#CFCFCF" : "#ffffff"};
 `;
 const Buttoncontainer = styled.div`
   width: 303px;
@@ -172,6 +176,14 @@ const Buttoncontainer = styled.div`
   align-items: center;
   justify-content: flex-end;
   column-gap: 12px;
+  div {
+    align-items: center;
+    padding-left: 15px;
+    width: 40px;
+    height: 35px;
+  }
+  svg {
+  }
 `;
 const CardButton = styled.button`
   border: none;
@@ -180,6 +192,7 @@ const CardButton = styled.button`
   width: 84px;
   height: 35px;
   border-radius: 5px;
-  background-color: ${(props) => props.backgroundcolor};
   color: ${(props) => props.color};
+  background-color: ${(props) =>
+    props.color === "#52B6FF" ? "#ffffff" : "#52B6FF"};
 `;

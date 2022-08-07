@@ -1,3 +1,6 @@
+import "dayjs/locale/pt-br";
+import dayjs from "dayjs";
+
 export const defaultMessage =
   "Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!";
 
@@ -13,3 +16,6 @@ export const days = [
   { id: 5, day: "S" },
   { id: 6, day: "S" },
 ];
+
+export const date = dayjs().format("DD/MM ");
+export const weekday = dayjs().locale("pt-br").format("dddd");
