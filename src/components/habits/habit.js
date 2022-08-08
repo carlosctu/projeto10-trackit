@@ -79,7 +79,7 @@ export default function NewHabit({
             Cancelar
           </CardButton>
           <CardButton onClick={() => setDisable(true)} color="#ffffff">
-            {!disable ? <ThreeDotsSpinner /> : "Salvar"}
+            {!disable ? "Salvar" : <ThreeDotsSpinner />}
           </CardButton>
         </Buttoncontainer>
       </NewCard>
