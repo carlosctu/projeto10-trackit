@@ -21,7 +21,8 @@ export default function History() {
 
   useEffect(() => {
     getHistory()
-      .then(() => {
+      .then((response) => {
+        console.log(response);
         setPreview(
           <CalendarContainer>
             <CalendarHistory />

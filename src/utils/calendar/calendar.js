@@ -41,7 +41,6 @@ export default function CalendarHistory() {
   function handleDay(event) {
     const day = dayjs(event).format("DD/MM/YYYY");
     const hasHabits = dayHistory.filter((habit) => habit.day === day);
-    setHabits(hasHabits);
     if (hasHabits.length !== 0) {
       return setHabits(hasHabits);
     } else {
