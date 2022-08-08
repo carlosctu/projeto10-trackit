@@ -34,7 +34,6 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 export default function App() {
-  const [token, setToken] = useState("");
   const [progressBar, setProgress] = useState(0);
 
   return (
@@ -43,8 +42,7 @@ export default function App() {
         <GlobalStyle />
         <UserContext.Provider
           value={{
-            token: token,
-            setToken: setToken,
+
             progressBar: progressBar,
             setProgress: setProgress,
           }}

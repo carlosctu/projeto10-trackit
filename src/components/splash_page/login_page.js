@@ -1,9 +1,8 @@
-import { UserContext } from "../../utils/providers/user_context";
 import { ThreeDotsSpinner } from "../../utils/spinners/spinners";
 import { Link, useNavigate } from "react-router-dom";
 import { signIn } from "../../services/api";
 import styled from "styled-components";
-import { useContext, useState } from "react";
+import {  useState } from "react";
 import {
   SplashWrapper,
   Logo,
@@ -12,7 +11,7 @@ import {
 } from "../styles/styles";
 
 export default function LoginPage() {
-  const loginInfo = useContext(UserContext);
+
   const navigate = useNavigate();
   const [disable, setDisable] = useState(false);
   const [userInfo, setInfo] = useState({
@@ -27,7 +26,7 @@ export default function LoginPage() {
     setDisable(true);
     signIn(userInfo)
       .then((response) => {
-        loginInfo.setToken(response.data.token);
+
         setDisable(false);
         navigate("/hoje");
         const userAuth = JSON.stringify({

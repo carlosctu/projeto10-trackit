@@ -14,7 +14,6 @@ export default function NewHabit({
   const [selectedDays, setDays] = useState([]);
   const [disable, setDisable] = useState(false);
 
-
   function handleForm(event) {
     setHabit((info) => ({ ...info, [event.target.name]: event.target.value }));
   }
@@ -80,7 +79,7 @@ export default function NewHabit({
             Cancelar
           </CardButton>
           <CardButton onClick={() => setDisable(true)} color="#ffffff">
-            {!disable ? "Salvar" : <ThreeDotsSpinner />}
+            {!disable ? <ThreeDotsSpinner /> : "Salvar"}
           </CardButton>
         </Buttoncontainer>
       </NewCard>
@@ -176,4 +175,10 @@ const CardButton = styled.button`
   color: ${(props) => props.color};
   background-color: ${(props) =>
     props.color === "#52B6FF" ? "#ffffff" : "#52B6FF"};
+
+  svg {
+    width: 50px;
+    height: 30px;
+    padding-left: 12px;
+  }
 `;
