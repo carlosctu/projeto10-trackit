@@ -1,17 +1,11 @@
-import { ThreeDotsSpinner } from "../../utils/spinners/spinners";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { signIn } from "../../services/api";
 import styled from "styled-components";
-import {  useState } from "react";
-import {
-  SplashWrapper,
-  Logo,
-  Form,
-  FormButtonContainer,
-} from "../styles/styles";
+import { signIn } from "../../services/api";
+import { ThreeDotsSpinner } from "../../utils/spinners/spinners";
+import { Form, FormButtonContainer, Logo, Wrapper } from "./styles";
 
 export default function LoginPage() {
-
   const navigate = useNavigate();
   const [disable, setDisable] = useState(false);
   const [userInfo, setInfo] = useState({
@@ -26,7 +20,6 @@ export default function LoginPage() {
     setDisable(true);
     signIn(userInfo)
       .then((response) => {
-
         setDisable(false);
         navigate("/hoje");
         const userAuth = JSON.stringify({
@@ -44,7 +37,7 @@ export default function LoginPage() {
   }
 
   return (
-    <SplashWrapper>
+    <Wrapper>
       <Logo src="../assets/img/logo.png" alt="trackIt" />
       <Form onSubmit={handleSubmit}>
         <input
@@ -70,7 +63,7 @@ export default function LoginPage() {
         </FormButtonContainer>
       </Form>
       <StyledLink to="/cadastro">Não tem uma conta? Cadastre-se!</StyledLink>
-    </SplashWrapper>
+    </Wrapper>
   );
 }
 

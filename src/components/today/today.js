@@ -1,12 +1,16 @@
-import { getTodayHabits, checkHabit, uncheckHabit } from "../../services/api";
-import { MutatingDotsSpinner } from "../../utils/spinners/spinners";
-import { UserContext } from "../../utils/providers/user_context";
-import { Wrapper, Title, Body, Spinner, Habits } from "../styles/styles";
 import { useContext, useEffect, useState } from "react";
-import { defaultMessage2, date, weekday } from "../../utils/constants";
 import "react-circular-progressbar/dist/styles.css";
+import { checkHabit, getTodayHabits, uncheckHabit } from "../../services/api";
+import { date, defaultMessage2, weekday } from "../../utils/constants";
+import { UserContext } from "../../utils/providers/user_context";
+import { MutatingDotsSpinner } from "../../utils/spinners/spinners";
 import Navigationbar from "../navbar/navigationbar";
-import styled from "styled-components";
+import {
+  Body, CheckHabitIcon,
+  HabitContainer,
+  HabitDescription, Habits, HabitSequence,
+  Sequence, Spinner, Text, Title, Wrapper
+} from "./styles";
 
 export default function Today() {
   const userInfo = useContext(UserContext);
@@ -119,59 +123,3 @@ function TodayHabits({ habit, setRefresh }) {
     </HabitContainer>
   );
 }
-
-const Text = styled.div`
-  font-size: 18px;
-  line-height: 23px;
-  color: #666666;
-  letter-spacing: 0;
-`;
-const HabitSequence = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 0 2px;
-  p {
-    font-size: 18px;
-    line-height: 23px;
-    color: #666666;
-    letter-spacing: 0;
-  }
-`;
-const HabitDescription = styled.div`
-  color: #666666;
-  p {
-    font-size: 13px;
-    line-height: 17px;
-  }
-  h1 {
-    font-size: 20px;
-    line-height: 25px;
-    margin-bottom: 7px;
-  }
-`;
-const Sequence = styled.span`
-  color: ${(props) => props.color};
-  padding-left: 4px;
-`;
-const CheckHabitIcon = styled.div`
-  color: ${(props) => props.color};
-  ion-icon {
-    width: 69px;
-    height: 69px;
-    padding-right: 15px;
-  }
-`;
-const HabitContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-  height: 91px;
-  padding: 13px 0 13px 15px;
-  background-color: #ffffff;
-  border-radius: 10px;
-`;
-

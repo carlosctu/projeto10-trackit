@@ -1,14 +1,9 @@
 import { useState } from "react";
-import { signUp } from "../../services/api";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { signUp } from "../../services/api";
 import { ThreeDotsSpinner } from "../../utils/spinners/spinners";
-import {
-  SplashWrapper,
-  Logo,
-  Form,
-  FormButtonContainer,
-} from "../styles/styles";
+import { Form, FormButtonContainer, Logo, Wrapper } from "./styles";
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -37,7 +32,7 @@ export default function RegisterPage() {
     event.preventDefault();
   }
   return (
-    <SplashWrapper>
+    <Wrapper>
       <Logo src="../assets/img/logo.png" alt="trackIt" />
       <Form onSubmit={handleSubmit}>
         <input
@@ -81,7 +76,7 @@ export default function RegisterPage() {
         </FormButtonContainer>
       </Form>
       <StyledLink to="/">Já tem uma conta? Faça login!</StyledLink>
-    </SplashWrapper>
+    </Wrapper>
   );
 }
 

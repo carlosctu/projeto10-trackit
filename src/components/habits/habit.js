@@ -1,8 +1,12 @@
-import styled from "styled-components";
+import { useEffect, useState } from "react";
 import { createHabit } from "../../services/api";
-import { useState, useEffect } from "react";
 import { days } from "../../utils/constants";
 import { ThreeDotsSpinner } from "../../utils/spinners/spinners";
+import {
+  Buttoncontainer,
+  CardButton, CardInput, DayContainer, DaysHabit, Form,
+  NewCard
+} from "./styles";
 
 export default function NewHabit({
   setAddHabit,
@@ -56,7 +60,7 @@ export default function NewHabit({
           disabled={disable}
           required
         />
-        <Days>
+        <DaysHabit>
           {days.map((data) => {
             return (
               <Day
@@ -67,7 +71,7 @@ export default function NewHabit({
               />
             );
           })}
-        </Days>
+        </DaysHabit>
         <Buttoncontainer>
           <CardButton
             onClick={(event) => {
@@ -114,71 +118,3 @@ function Day({ id, day, setDays }) {
     </DayContainer>
   );
 }
-
-// Styles
-const Form = styled.form`
-  margin-bottom: 29px;
-  display: ${(props) => props.display};
-`;
-const NewCard = styled.div`
-  height: 180px;
-  background-color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-`;
-const CardInput = styled.input`
-  box-sizing: border-box;
-  width: 301px;
-  height: 45px;
-  font-size: 18px;
-  margin: 10px 19px;
-  &::placeholder {
-    color: #dbdbdb;
-  }
-`;
-const Days = styled.div`
-  width: 301px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  column-gap: 4px;
-  margin-bottom: 26px;
-`;
-const DayContainer = styled.div`
-  cursor: pointer;
-  width: 30px;
-  height: 30px;
-  border: 1px solid #d4d4d4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 5px;
-  color: ${(props) => props.color};
-  background-color: ${(props) =>
-    props.color === "#ffffff" ? "#CFCFCF" : "#ffffff"};
-`;
-const Buttoncontainer = styled.div`
-  width: 303px;
-  display: flex;
-  justify-content: flex-end;
-  column-gap: 12px;
-`;
-const CardButton = styled.button`
-  border: none;
-  font-size: 16px;
-  width: 84px;
-  height: 35px;
-  border-radius: 5px;
-  color: ${(props) => props.color};
-  background-color: ${(props) =>
-    props.color === "#52B6FF" ? "#ffffff" : "#52B6FF"};
-
-  svg {
-    width: 50px;
-    height: 30px;
-    padding-left: 12px;
-  }
-`;

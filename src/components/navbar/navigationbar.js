@@ -1,10 +1,10 @@
 import { CircularProgressbar } from "react-circular-progressbar";
-import { NavigationContainer, ProgressbarContainer } from "../styles/styles";
 import { useNavigate } from "react-router-dom";
+import { ProgressbarContainer, Wrapper } from "./styles";
 export default function Navigationbar({ progressBar }) {
   const navigate = useNavigate();
   return (
-    <NavigationContainer>
+    <Wrapper>
       <p
         onClick={() => {
           navigate("/habitos");
@@ -26,6 +26,6 @@ export default function Navigationbar({ progressBar }) {
       >
         Histórico
       </p>
-    </NavigationContainer>
+    </Wrapper>
   );
 }

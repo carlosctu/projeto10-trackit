@@ -1,13 +1,22 @@
-import { MutatingDotsSpinner } from "../../utils/spinners/spinners";
-import { UserContext } from "../../utils/providers/user_context";
-import { defaultMessage, days } from "../../utils/constants";
-import { deleteHabit, getHabits } from "../../services/api";
-import { Wrapper, Body, Spinner, HabitsBody } from "../styles/styles";
 import { useContext, useEffect, useState } from "react";
-import Navigationbar from "../navbar/navigationbar";
 import "react-circular-progressbar/dist/styles.css";
-import styled from "styled-components";
+import { deleteHabit, getHabits } from "../../services/api";
+import { days, defaultMessage } from "../../utils/constants";
+import { UserContext } from "../../utils/providers/user_context";
+import { MutatingDotsSpinner } from "../../utils/spinners/spinners";
+import Navigationbar from "../navbar/navigationbar";
 import NewHabit from "./habit";
+import {
+  Body,
+  Days,
+  HabitContainer,
+  HabitDaysContainer,
+  HabiTitleContainer,
+  HabitsBody,
+  HabitsTitle,
+  Spinner,
+  Wrapper
+} from "./styles";
 
 export default function HabitsPage() {
   const userInfo = useContext(UserContext);
@@ -116,51 +125,3 @@ function UserHabitDays({ habitId, habitDays }) {
     </Days>
   );
 }
-
-const HabiTitleContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
-  ion-icon {
-    padding-right: 18px;
-  }
-`;
-
-const HabitContainer = styled.div`
-  box-sizing: border-box;
-  height: 91px;
-  padding: 13px 0 13px 15px;
-  background-color: #ffffff;
-  border-radius: 10px;
-`;
-
-const HabitDaysContainer = styled.div`
-  width: 30px;
-  height: 30px;
-  border: 1px solid #d4d4d4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 5px;
-  color: ${(props) => props.color};
-  background-color: ${(props) =>
-    props.color === "#ffffff" ? "#CFCFCF" : "#ffffff"};
-`;
-const Days = styled.div`
-  display: flex;
-  column-gap: 4px;
-`;
-
-const HabitsTitle = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 23px;
-  color: #126ba5;
-  margin-bottom: 12px;
-  ion-icon {
-    cursor: pointer;
-    width: 41px;
-    height: 35px;
-  }
-`;

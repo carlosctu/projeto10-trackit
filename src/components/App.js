@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { UserContext } from "../utils/providers/user_context";
-import "../styles/reset.css";
+import { createGlobalStyle, ThemeProvider } from "styled-components";
 import HabitsPage from "../components/habits/habits";
-import LoginPage from "../components/splash_page/login_page";
 import History from "../components/history/history";
+import LoginPage from "../components/splash_page/login_page";
 import RegisterPage from "../components/splash_page/register_page";
 import Today from "../components/today/today";
-import { ThemeProvider, createGlobalStyle } from "styled-components";
-import ProtectedRoute from "../utils/routes/protected_route";
+import "../styles/reset.css";
+import { UserContext } from "../utils/providers/user_context";
 import PrivateRoute from "../utils/routes/private_route";
+import ProtectedRoute from "../utils/routes/protected_route";
 
 const theme = {
   primary: "#e5e5e5",
