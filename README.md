@@ -15,7 +15,7 @@
 
 
 
-## Main topics
+## Main functionalities
 
 - Register/Sign up
 - Login/Sign in
