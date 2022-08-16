@@ -27,7 +27,7 @@
 
 <p>You can access this project by following the next link:</p>
 
- [Cineflex by Carlos Casanova](https://projeto9-cineflex-remastered.vercel.app/)
+ [TrackIt by Carlos Casanova](https://projeto9-cineflex-remastered.vercel.app/)
 
 ## [Autores](https://www.linkedin.com/in/carloscasanovad/)
 <div display="flex">
