@@ -34,7 +34,20 @@
 
  [TrackIt by Carlos Casanova](https://projeto10-trackit-nu-one.vercel.app/hoje)
 
-## [Autores](https://www.linkedin.com/in/carloscasanovad/)
+## How to run
+
+1. Clone this repository
+2. Install dependencies
+```bash
+npm i
+```
+3. Run the UI with
+```bash
+npm run start
+```
+4. Finally access http://localhost:3000 on your favorite browser (unless it is Internet Explorer. In this case, review your life decisions)
+
+## [Autor](https://www.linkedin.com/in/carloscasanovad/)
 <div display="flex">
 <img width="100px" src="https://user-images.githubusercontent.com/72350887/177237527-f05d4f6c-cc07-443e-a399-4b83fa211335.png" alt=""/>
 <p><b>Carlos Casanova</b></p>
