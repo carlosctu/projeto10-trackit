@@ -31,6 +31,7 @@
 ## How to access
 
 <p>You can access this project by following the next link:</p>
+<p>ps. Case you want to try an existing account: id: sadsamuraidog@gmail.com / password: 123456</p>
 
  [TrackIt by Carlos Casanova](https://projeto10-trackit-nu-one.vercel.app/hoje)
 
