@@ -13,6 +13,11 @@
 
 <p align="justify"> TrackIt is an application, made it in React, to track your daily habits.</p>
 
+<div align="center">
+ <img width="300px" height="450px" src="https://user-images.githubusercontent.com/72350887/185503970-6b49abcf-a99e-4001-a82b-002cc73caca1.gif" alt="TrackIt GIF"/>
+</div>
+
+
 
 
 ## Main functionalities
