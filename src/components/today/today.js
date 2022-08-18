@@ -34,7 +34,7 @@ export default function Today() {
         const done = response.data.filter((e) => e.done);
         const total = response.data.length;
         if (done.length !== 0) {
-          const percentage = (done.length / total).toFixed(2) * 100;
+          const percentage = ((done.length / total * 100).toFixed(2));
           setStatus(<span>{percentage}% dos hábitos concluídos</span>);
           userInfo.setProgress(percentage);
         } else {
