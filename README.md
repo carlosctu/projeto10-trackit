@@ -1,20 +1,22 @@
 <div>
-<h1 align="center">TrackIt</h1>
+<h1 align="center">MyWallet</h1>
 <br/>
 </div>
-
-![uses-react](https://img.shields.io/badge/REACT-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-<img style='margin: 5px;' src='https://img.shields.io/badge/axios%20-%2320232a.svg?&style=for-the-badge&color=informational'>
-<img style='margin: 5px;' src="https://img.shields.io/badge/react-app%20-%2320232a.svg?&style=for-the-badge&color=60ddf9&logo=react&logoColor=%2361DAFB"/>
-<img style='margin: 5px;' src="https://img.shields.io/badge/react_route%20-%2320232a.svg?&style=for-the-badge&logo=react&logoColor=%2361DAFB"/>
-<img style='margin: 5px;' src='https://img.shields.io/badge/styled-components%20-%2320232a.svg?&style=for-the-badge&color=b8679e&logo=styled-components&logoColor=%3a3a3a'>
+<div align="center">
+  <img src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white" height="30px"/>
+  <img src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white" height="30px"/>  
+  <img src="https://img.shields.io/badge/Express.js-404D59?style=for-the-badge&logo=express.js&logoColor=white" height="30px"/>
+</div>
 
 ## About The Project
 
-<p align="justify"> TrackIt is an application, made it in React, to track your daily habits.</p>
+<p align="justify"> MyWallet is kind of a Bank App, made it in React and Node.JS, to track your daily incomes and outcomes.</p>
 
 <div align="center">
- <img width="300px" height="450px" src="https://user-images.githubusercontent.com/72350887/185503970-6b49abcf-a99e-4001-a82b-002cc73caca1.gif" alt="TrackIt GIF"/>
+<div align="center">
+ <img width="300px" height="480px" src="https://user-images.githubusercontent.com/72350887/189780243-7575a2b8-600b-49df-9230-25ff82cad5ff.gif" alt="TrackIt GIF"/>
+</div>
+
 </div>
 
 
@@ -27,26 +29,6 @@
 - Create your habits
 - Track your daily habits
 - Follow or see your history
-
-## How to access
-
-<p>You can access this project by following the next link:</p>
-<p>ps. Case you want to try an existing account: id: sadsamuraidog@gmail.com / password: 123456</p>
-
- [TrackIt by Carlos Casanova](https://projeto10-trackit-nu-one.vercel.app/hoje)
-
-## How to run
-
-1. Clone this repository
-2. Install dependencies
-```bash
-npm i
-```
-3. Run the UI with
-```bash
-npm run start
-```
-4. Finally access http://localhost:3000 on your favorite browser (unless it is Internet Explorer. In this case, review your life decisions)
 
 ## [Autor](https://www.linkedin.com/in/carloscasanovad/)
 <div display="flex">
